@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store</title>
+  </head>
+  <body>
+    <h1>Stripe API</h1>
+    <p>By Daniel Barreto</p>
+    <button id="checkout">Pay Sample</button>
+
+    <script>
+      const items = [
+        {
+          price_data: {
+            product_data: {
+              name: "Laptop",
+              description: "Gaming Laptop",
+            },
+            currency: "eur",
+            unit_amount: 20000, // 200.00
+          },
+          quantity: 1,
+        },
+        {
+          price_data: {
+            product_data: {
+              name: "TV",
+              description: "Smart TV",
+            },
+            currency: "eur",
+            unit_amount: 10000, // 100.00
+          },
+          quantity: 3,
+        },
+      ];
+
+      const checkout = document.getElementById("checkout");
+      checkout.addEventListener("click", async () => {
+        const res = await fetch(
+          "http://localhost:3000/create-checkout-session",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(items),
+          }
+        );
+        const data = await res.json();
+        /* Redirect to Stripe */
+        window.location.href = data.url;
+      });
+    </script>
+  </body>
+</html>
