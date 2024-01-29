@@ -10,8 +10,12 @@ export const createSession = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: items,
       mode: "payment",
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url:
+        //"http://localhost:3000/success",
+        "https://danielbarretoes-nodejs-stripe-checkout.onrender.com/success",
+      cancel_url:
+        //"http://localhost:3000/cancel",
+        "https://danielbarretoes-nodejs-stripe-checkout.onrender.com/cancel",
     });
     console.log(session);
     return res.json({ url: session.url });
